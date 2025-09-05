@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\desktop\\Bloggie\\Bloggie.web\\Bloggie.web.csproj": {}
+    "D:\\Bloggie\\Bloggie.web\\Bloggie.web.csproj": {}
   },
   "projects": {
-    "C:\\desktop\\Bloggie\\Bloggie.web\\Bloggie.web.csproj": {
+    "D:\\Bloggie\\Bloggie.web\\Bloggie.web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\desktop\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
+        "projectUniqueName": "D:\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
         "projectName": "Bloggie.web",
-        "projectPath": "C:\\desktop\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
+        "projectPath": "D:\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
         "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
-        "outputPath": "C:\\desktop\\Bloggie\\Bloggie.web\\obj\\",
+        "outputPath": "D:\\Bloggie\\Bloggie.web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

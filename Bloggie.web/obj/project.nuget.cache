@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Q/Mo9sw43u4=",
+  "dgSpecHash": "EIEeIsTVvBk=",
   "success": true,
-  "projectFilePath": "C:\\desktop\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
+  "projectFilePath": "D:\\Bloggie\\Bloggie.web\\Bloggie.web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ACER\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\ACER\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

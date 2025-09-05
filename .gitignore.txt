@@ -1,0 +1,16 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.db
+*.suo
+*.user
+*.cache
+*.log
+
+# Backup & metadata
+*.vsidx
+*.vscode/
+*.json.backup
