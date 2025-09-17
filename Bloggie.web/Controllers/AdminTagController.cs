@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bloggie.web.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bloggie.web.Controllers
 {
@@ -10,9 +11,12 @@ namespace Bloggie.web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SubmitTag()
+        [ActionName("Add")]
+        public IActionResult SubmitTag(AddTagRequest addTagRequest)
         {
-                  return View("Add");
+            var name= addTagRequest.Name;
+            var displayName= addTagRequest.DisplayName;
+            return View("Add");
         }
     }
 }

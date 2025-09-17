@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Bloggie.web.Models.ViewModels.AddTagRequest
 @{
 }
 
@@ -12,11 +10,11 @@
             <form method="post">
                 <div class="mb-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" required />
+                    <input type="text" class="form-control" id="name" asp-for="Name" required />
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Display Name</label>
-                    <input type="text" class="form-control" id="displayName" required />
+                <input type="text" class="form-control" id="displayName" asp-for="DisplayName" required />
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-outline-success">Submit</button>
