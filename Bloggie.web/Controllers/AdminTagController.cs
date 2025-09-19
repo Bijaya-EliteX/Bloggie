@@ -20,7 +20,7 @@ namespace Bloggie.web.Controllers
         }
         [HttpPost]
         [ActionName("Add")]
-        public IActionResult SubmitTag(AddTagRequest addTagRequest)
+        public IActionResult Add(AddTagRequest addTagRequest)
         {
             var tag = new Tag
             {
@@ -29,8 +29,16 @@ namespace Bloggie.web.Controllers
             };
             bloggiedbContext.Tags.Add(tag);
             bloggiedbContext.SaveChanges();
-                 
-            return View("Add");
+
+            return RedirectToAction("List");
+        }
+        [HttpGet]
+        [ActionName("List")]
+        public IActionResult List()
+        {
+            //use dbcontext to read the tags from the database
+            var tags = bloggiedbContext.Tags.ToList();
+            return View(tags);
         }
     }
 }
