@@ -16,6 +16,7 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Display Name</th>
+                        <th>Link</th> <!-- Link to edit the tag -->
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,12 @@
                             <td>@tag.Id</td>
                             <td>@tag.Name</td>
                             <td>@tag.DisplayName</td>
+                            <td>
+                                <a asp-area=""
+                                   asp-controller="AdminTag"
+                                   asp-action="Edit"
+                                   asp-route-id="@tag.Id">Edit</a>
+                            </td>
                         </tr>
                     }
                 </tbody>
