@@ -7,29 +7,29 @@ namespace Bloggie.Web.Repositories
 {
     public class TagRepository : ITagRepository
     {
-        private readonly BloggieDbContext bloggieDbContext;
+        private readonly BloggiedbContext bloggiedbContext;
 
         // Constructor to inject the DbContext
-        public TagRepository(BloggieDbContext bloggieDbContext)
+        public TagRepository(BloggiedbContext bloggiedbContext)
         {
-            this.bloggieDbContext = bloggieDbContext;
+            this.bloggiedbContext = bloggiedbContext;
         }
 
         public async Task<Tag> AddAsync(Tag tag)
         {
-            await bloggieDbContext.Tags.AddAsync(tag);
-            await bloggieDbContext.SaveChangesAsync();
+            await bloggiedbContext.Tags.AddAsync(tag);
+            await bloggiedbContext.SaveChangesAsync();
             return tag;
         }
 
         public async Task<Tag?> DeleteAsync(Guid id)
         {
-            var existingTag = await bloggieDbContext.Tags.FindAsync(id);
+            var existingTag = await bloggiedbContext.Tags.FindAsync(id);
 
             if (existingTag != null)
             {
-                bloggieDbContext.Tags.Remove(existingTag);
-                await bloggieDbContext.SaveChangesAsync();
+                bloggiedbContext.Tags.Remove(existingTag);
+                await bloggiedbContext.SaveChangesAsync();
                 return existingTag;
             }
 
@@ -38,24 +38,24 @@ namespace Bloggie.Web.Repositories
 
         public async Task<IEnumerable<Tag>> GetAllAsync()
         {
-            return await bloggieDbContext.Tags.ToListAsync();
+            return await bloggiedbContext.Tags.ToListAsync();
         }
 
         public async Task<Tag?> GetAsync(Guid id)
         {
-            return await bloggieDbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            return await bloggiedbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Tag?> UpdateAsync(Tag tag)
         {
-            var existingTag = await bloggieDbContext.Tags.FindAsync(tag.Id);
+            var existingTag = await bloggiedbContext.Tags.FindAsync(tag.Id);
 
             if (existingTag != null)
             {
                 existingTag.Name = tag.Name;
                 existingTag.DisplayName = tag.DisplayName;
 
-                await bloggieDbContext.SaveChangesAsync();
+                await bloggiedbContext.SaveChangesAsync();
                 return existingTag;
             }
 

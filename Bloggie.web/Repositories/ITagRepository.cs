@@ -5,9 +5,9 @@ namespace Bloggie.web.Repositories
     public class ITagRepository
     {
         Task<IEnumerable<Tag>> GetAllAsync();
-        Task<Tag?> GetAsync(Guid id);
-        Task<Tag> AddAsync(Tag tag);
-        Task<Tag?> UpdateAsync(Tag tag);
-        Task<Tag?> DeleteAsync(Guid id);
+        Task<Tag?> GetAsync(Guid id); //read
+        Task<Tag> AddAsync(Tag tag); //create
+        Task<Tag?> UpdateAsync(Tag tag); //update
+        Task<Tag?> DeleteAsync(Guid id); //delete
     }
 }
