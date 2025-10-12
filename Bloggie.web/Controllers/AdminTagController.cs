@@ -1,6 +1,7 @@
 ﻿using Bloggie.web.Data;
 using Bloggie.web.Models.Domain;
 using Bloggie.web.Models.ViewModels;
+using Bloggie.web.Repositories;
 using Bloggie.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,13 +11,22 @@ namespace Bloggie.web.Controllers
 {
     public class AdminTagController : Controller
     {
-        private readonly BloggiedbContext bloggiedbContext;
+        private readonly ITagRepository tagRepository;
 
-        public AdminTagController(BloggiedbContext bloggiedbContext)
+        public AdminTagController(ITagRepository tagRepository)
         {
-            this.bloggiedbContext = bloggiedbContext;
+            this.tagRepository = tagRepository;
         }
         [HttpGet]
+        [ActionName("List")]
+        public async Task<IActionResult> List()
+        {
+            //use dbcontext to read the tags from the database
+            var tags = await tagRepository.GetAllAsync();
+            return View(tags);
+        }
+        [HttpGet]
+        //just the form is displayed
         public IActionResult Add()
         {
             return View();
@@ -30,23 +40,15 @@ namespace Bloggie.web.Controllers
                 Name = addTagRequest.Name,
                 DisplayName = addTagRequest.DisplayName
             };
-            await bloggiedbContext.Tags.AddAsync(tag);
-            await bloggiedbContext.SaveChangesAsync();
+            await tagRepository.AddAsync(tag);
 
             return RedirectToAction("List");
         }
-        [HttpGet]
-        [ActionName("List")]
-        public async Task<IActionResult> List()
-        {
-            //use dbcontext to read the tags from the database
-            var tags =await bloggiedbContext.Tags.ToListAsync();
-            return View(tags);
-        }
+       
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var tag = await bloggiedbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            var tag = await tagRepository.GetAsync(id);
             if (tag != null)
             {
                 //mapping domain model to view model
@@ -71,19 +73,11 @@ namespace Bloggie.web.Controllers
                 Name = editTagRequest.Name,
                 DisplayName = editTagRequest.DisplayName
             };
-            var existingTag =await bloggiedbContext.Tags.FindAsync(tag.Id);
-            if (existingTag != null)
+            var updatedtag =await tagRepository.UpdateAsync(tag);
+            if (updatedtag != null)
             {
-                // Update the properties of the existing tag.
-                existingTag.Name = tag.Name;
-                existingTag.DisplayName = tag.DisplayName;
-
-                // Save the changes to the database.
-                await bloggiedbContext.SaveChangesAsync();
-
-                // After a successful update, redirect the user back to the 'Edit' page to show the changes.
-                // Pass the ID as a route value to reload the correct tag.
-                return RedirectToAction("List", new { id = editTagRequest.Id });
+                // Show success notification
+                return RedirectToAction("Edit", new { id = editTagRequest.Id });
             }
 
             // If the tag was not found, redirect back to the Edit page.
@@ -95,13 +89,14 @@ namespace Bloggie.web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(EditTagRequest editTagRequest)
         {
-            var tag = await bloggiedbContext.Tags.FindAsync(editTagRequest.Id);
-            if (tag != null)
+            var deletedtag = await tagRepository.DeleteAsync(editTagRequest.Id);
+            if (deletedtag != null)
             {
-                bloggiedbContext.Tags.Remove(tag);
-                bloggiedbContext.SaveChanges();
-                return RedirectToAction("List", new { id = editTagRequest.Id });
+                //show success notification
+                return RedirectToAction("List");
             }
             return RedirectToAction("Edit", new { id = editTagRequest.Id });
-    }   }
+    
+        }   
+    }
 }

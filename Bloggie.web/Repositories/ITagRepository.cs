@@ -2,7 +2,7 @@
 
 namespace Bloggie.web.Repositories
 {
-    public class ITagRepository
+    public interface ITagRepository
     {
         Task<IEnumerable<Tag>> GetAllAsync();
         Task<Tag?> GetAsync(Guid id); //read
