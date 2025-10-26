@@ -1,4 +1,5 @@
-﻿using Bloggie.web.Models.ViewModels;
+﻿using Bloggie.web.Models.Domain;
+using Bloggie.web.Models.ViewModels;
 using Bloggie.web.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,11 +9,14 @@ namespace Bloggie.web.Controllers
     public class AdminBlogPostsController : Controller
     {
         private readonly ITagRepository tagRepository;
+        private readonly IBlogPostRepository blogPostRepository;
+
 
         // Constructor for dependency injection
-        public AdminBlogPostsController(ITagRepository tagRepository)
+        public AdminBlogPostsController(ITagRepository tagRepository, IBlogPostRepository blogPostRepository)
         {
             this.tagRepository = tagRepository;
+            this.blogPostRepository = blogPostRepository;
         }
 
         // GET Action: Displays the form with a list of tags
@@ -30,12 +34,41 @@ namespace Bloggie.web.Controllers
             return View(model);
         }
 
-        // POST Action: Handles form submission
+        // POST Action logic fully implemented
         [HttpPost]
         public async Task<IActionResult> Add(AddBlogPostRequest addBlogPostRequest)
         {
-            // Placeholder for form processing logic
+            //we map ere the AddBlogPostRequest to BlogPost domain model (View model->domain model)
+            var blogPost = new BlogPost
+            {
+                Heading = addBlogPostRequest.Heading,
+                PageTitle = addBlogPostRequest.PageTitle,
+                Content = addBlogPostRequest.Content,
+                ShortDescription = addBlogPostRequest.ShortDescription,
+                FeaturedImageUrl = addBlogPostRequest.FeaturedImageUrl,
+                UrlHandle = addBlogPostRequest.UrlHandle,
+                PublishedDate = addBlogPostRequest.PublishedDate,
+                Author = addBlogPostRequest.Author,
+                Visible = addBlogPostRequest.Visible,
+
+            };
+            //Mapping Tags from the selected tags
+            var selectedTags = new List<Tag>();
+            foreach(var selectedTagId in addBlogPostRequest.SelectedTags)
+            {
+                var selectedTagIdAsGuid= Guid.Parse(selectedTagId);
+                var existingTag = await tagRepository.GetAsync(selectedTagIdAsGuid);
+                if (existingTag != null)
+                {
+                    selectedTags.Add(existingTag);
+                }
+            }
+            //map the collected tags back to the domain model
+            blogPost.Tags = selectedTags;
+            //saving to datbase via repository
+            await blogPostRepository.AddAsync(blogPost);
+
             return RedirectToAction("Add");
         }
     }
-}
+} 

@@ -18,7 +18,7 @@ namespace Bloggie.web.Models.ViewModels
         // Property to display all available tags in a dropdown
         // THIS is what @Model.Tags refers to:
         public IEnumerable<SelectListItem> Tags { get; set; }
-        // Property to collect the single selected tag from the user
-        public string SelectedTag { get; set; }
+        // It's initialized to an empty array to prevent null reference errors.
+        public string[]  SelectedTags { get; set; }=Array.Empty<string>();
     }
 }
