@@ -7,7 +7,7 @@ namespace Bloggie.web.Data
         public BloggiedbContext(DbContextOptions options):base(options)
         {
         }
-        public DbSet<BlogPost> Blogposts { get; set; }
+        public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Tag> Tags { get; set; }
     }
 }

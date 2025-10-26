@@ -19,6 +19,7 @@ namespace Bloggie.web.Controllers
             this.blogPostRepository = blogPostRepository;
         }
 
+        
         // GET Action: Displays the form with a list of tags
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -69,6 +70,13 @@ namespace Bloggie.web.Controllers
             await blogPostRepository.AddAsync(blogPost);
 
             return RedirectToAction("Add");
+        }
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            //call the repository to get all blog posts
+            var blogPosts = await blogPostRepository.GetAllAsync();
+            return View(blogPosts);
         }
     }
 } 
