@@ -1,6 +1,7 @@
 ﻿using Bloggie.web.Models.Domain;
 using Bloggie.web.Models.ViewModels;
 using Bloggie.web.Repositories;
+using Bloggie.Web.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -77,6 +78,48 @@ namespace Bloggie.web.Controllers
             //call the repository to get all blog posts
             var blogPosts = await blogPostRepository.GetAllAsync();
             return View(blogPosts);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            // 1. Retrieve the result from the repository (including related Tags)
+            var blogPost = await blogPostRepository.GetAsync(id);
+
+            // 2. Retrieve all tags for the dropdown
+            var tagsDomainModel = await tagRepository.GetAllAsync();
+
+            // 3. Map the domain model into the view model
+            if (blogPost != null)
+            {
+                var model = new EditBlogPostRequest
+                {
+                    Id = blogPost.Id,
+                    Heading = blogPost.Heading,
+                    PageTitle = blogPost.PageTitle,
+                    Content = blogPost.Content,
+                    ShortDescription = blogPost.ShortDescription,
+                    FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                    UrlHandle = blogPost.UrlHandle,
+                    PublishedDate = blogPost.PublishedDate,
+                    Author = blogPost.Author,
+                    Visible = blogPost.Visible,
+
+                    // Map all tags for the dropdown list
+                    Tags = tagsDomainModel.Select(x => new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    }),
+
+                    // Map selected tags (IDs) for the HTML to automatically select them
+                    SelectedTags = blogPost.Tags.Select(x => x.Id.ToString()).ToArray()
+                };
+
+                // 4. Pass data to view
+                return View(model);
+            }
+
+            return View(null); // Return null model if blog post is not found
         }
     }
 } 
