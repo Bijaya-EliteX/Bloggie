@@ -121,5 +121,54 @@ namespace Bloggie.web.Controllers
 
             return View(null); // Return null model if blog post is not found
         }
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditBlogPostRequest editBlogPostRequest)
+        {
+            // 1. Map view model back to domain model
+            var blogPostDomainModel = new BlogPost
+            {
+                Id = editBlogPostRequest.Id,
+                Heading = editBlogPostRequest.Heading,
+                PageTitle = editBlogPostRequest.PageTitle,
+                Content = editBlogPostRequest.Content,
+                ShortDescription = editBlogPostRequest.ShortDescription,
+                FeaturedImageUrl = editBlogPostRequest.FeaturedImageUrl,
+                UrlHandle = editBlogPostRequest.UrlHandle,
+                PublishedDate = editBlogPostRequest.PublishedDate,
+                Author = editBlogPostRequest.Author,
+                Visible = editBlogPostRequest.Visible,
+            };
+
+            // Map tags back to domain model
+            var selectedTags = new List<Tag>();
+            foreach (var selectedTag in editBlogPostRequest.SelectedTags)
+            {
+                if (Guid.TryParse(selectedTag, out var tagId))
+                {
+                    // Find the tag in the repository (or context) and add to the list
+                    var foundTag = await tagRepository.GetAsync(tagId);
+                    if (foundTag != null)
+                    {
+                        selectedTags.Add(foundTag);
+                    }
+                }
+            }
+            blogPostDomainModel.Tags = selectedTags;
+
+
+            // 2. Submit information to repository to update
+            var updatedBlog = await blogPostRepository.UpdateAsync(blogPostDomainModel);
+
+
+            // 3. Redirect to GET
+            if (updatedBlog != null)
+            {
+                // **Show success notification (Placeholder logic)**
+                return RedirectToAction("Edit"); // Redirects to the GET Edit method
+            }
+
+            // **Show error notification (Placeholder logic)**
+            return RedirectToAction("Edit");
+        }
     }
 } 
