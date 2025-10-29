@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "ContainingType": "Bloggie.web.Controllers.ImagesController",
+    "Method": "Index",
+    "RelativePath": "api/Images",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
