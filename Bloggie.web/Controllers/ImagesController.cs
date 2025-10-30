@@ -11,6 +11,7 @@ namespace Bloggie.web.Controllers
     [Route("api/[controller]")]
     // Marks the class as an API controller, enabling certain API-specific behaviors
     [ApiController]
+    
     public class ImagesController : ControllerBase
     {
         // Private field to hold the injected repository instance
@@ -23,6 +24,7 @@ namespace Bloggie.web.Controllers
         }
 
         [HttpPost]
+        
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
        

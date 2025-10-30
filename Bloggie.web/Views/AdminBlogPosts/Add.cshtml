@@ -77,5 +77,44 @@
             @section Scripts{
                 <script>
                     var editor= new FroalaEditor('#content');
+                    const featuredUploadElement = document.getElementById('featuredImageUpload');
+                    const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+                    const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+                    
+                    
+                    async function uploadFeaturedImage(event){
+                           // 1. Create a FormData object to prepare the file for upload
+                           let data = new FormData();
+                           // The key 'file' must match the parameter name in the C# controller action (IFormFile file)
+                           data.append('file', event.target.files[0]);
+
+                                                     //Use fetch API to send the POST request
+                          await fetch('/api/images', {
+                              method: 'POST',
+                              headers: {
+                                  'Accept': '*/*' // Tell the server we accept any response type
+                              },
+                              body: data
+                          })
+                          // 3. Convert the response stream to JSON format
+                          .then(response => response.json())
+                          // 4. Handle the resulting JSON object (from the C# controller)
+                          .then(result => {
+                                   featuredImageUrlElement.value = result.link;
+                                   featuredImageDisplayElement.src = result.link;
+                                   //overriding the initial display none to block
+                                   featuredImageDisplayElement.style.display = 'block';
+                          })
+                          .catch(error => {
+                              console.error("Upload error:", error);
+                                        
+            
+                          });
+                                
+                         
+                    }
+                     //Attach an event listener to the file input
+                     featuredUploadElement.addEventListener('change', uploadFeaturedImage);
                 </script>
             }
