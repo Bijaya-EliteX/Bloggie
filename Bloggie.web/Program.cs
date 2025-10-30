@@ -14,6 +14,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("BloggieDbConnect
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 // NEW: Registering the IBlogPostRepository
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+// Registering the IImageRepository with CloudinaryImageRepository implementation
+builder.Services.AddScoped<IImageRepository, CloudinaryImageRepository>();
 
 
 var app = builder.Build();
