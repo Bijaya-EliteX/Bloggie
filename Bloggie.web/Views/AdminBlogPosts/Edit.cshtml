@@ -42,6 +42,31 @@
                 <input type="text" class="form-control" id="shortDescription" asp-for="ShortDescription" />
             </div>
 
+            @* --- Add Featured Image Upload Section --- *@
+            <div class="mb-3">
+                <label class="form-label">Featured Image Upload</label>
+                <input type="file" id="featuredImageUpload" class="form-control" />
+
+                @if (Model.FeaturedImageUrl != null)
+                {
+                    @* Show image and set src if a URL exists, making it display: block *@
+                    <img src="@Model.FeaturedImageUrl" id="featuredImageDisplay" style="display: block; width: 300px;" />
+                }
+                else
+                {
+                    @* Hide image initially if no URL exists in the model *@
+                    <img src="" id="featuredImageDisplay" style="display: none; width: 300px;" />
+                }
+            </div>
+            @* --- End Featured Image Upload Section --- *@
+
+            @* --- Existing Featured Image URL Input Field --- *@
+            <div class="mb-3">
+                <label class="form-label">[Featured Image URL Label Here]</label>
+                <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
+            </div>
+            @* --- End Existing Featured Image URL Input Field --- *@
+
             <div class="mb-3">
                 <label class="form-label" for="featuredImageUrl">Featured Image URL</label>
                 <input type="text" class="form-control" id="featuredImageUrl" asp-for="FeaturedImageUrl" />
@@ -93,5 +118,44 @@
 @section Scripts{
     <script>
         var editor= new FroalaEditor('#content');
+            // 1. Element selection
+        const featuredUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+        // 2. Event listener
+        featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+
+        // 3. Asynchronous function definition
+        async function uploadFeaturedImage(e) {
+
+            // Remove existing error message logging from testing, now it is correct
+            // console.log(e.target.files[0]);
+
+            // Create form data and append the file with the key 'file'
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            // Await the fetch call to the Image API
+            // No Content-Type needed for FormData body
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*'
+                },
+                body: data
+            })
+            .then(response => response.json()) // Get the JSON response
+            .then(result => {
+                // Update the Feature Image URL input field value with the Cloudinary link
+                featuredImageUrlElement.value = result.link;
+
+                // Update the image source (to display the preview)
+                featuredImageDisplayElement.src = result.link;
+
+                // Make the image display block (show it)
+                featuredImageDisplayElement.style.display = 'block';
+            });
+        }
     </script>
 }

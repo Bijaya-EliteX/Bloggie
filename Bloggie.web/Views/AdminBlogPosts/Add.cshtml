@@ -87,7 +87,7 @@
                            // 1. Create a FormData object to prepare the file for upload
                            let data = new FormData();
                            // The key 'file' must match the parameter name in the C# controller action (IFormFile file)
-                           data.append('file', event.target.files[0]);
+                           data.append('file', featuredUploadElement.files[0]); //or event.target.files[0]   
 
                                                      //Use fetch API to send the POST request
                           await fetch('/api/images', {
