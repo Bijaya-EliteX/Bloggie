@@ -76,7 +76,9 @@
 
             @section Scripts{
                 <script>
-                    var editor= new FroalaEditor('#content');
+                    var editor= new FroalaEditor('#content', {
+                          imageUploadURL: '/api/images' // Froala option to specify a custom API endpoint for image uploads
+                    });
                     const featuredUploadElement = document.getElementById('featuredImageUpload');
                     const featuredImageUrlElement = document.getElementById('featuredImageUrl');
                     const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
