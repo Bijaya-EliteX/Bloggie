@@ -34,7 +34,7 @@
             {
                 <div class="col-12 col-lg-6">
                     @* Individual Blog Post Card/Container (padding of 5 added later in video: p-5) *@
-                    <div class="mb-5 bg-gradient box-shadow p-5">
+                    <div class="mb-5 bg-light box-shadow p-5">
                         @* 1. Featured Image *@
                         <img src="@blogPost.FeaturedImageUrl"
                              alt="@blogPost.Heading"
@@ -62,7 +62,12 @@
                         <p class="mb-4">@blogPost.ShortDescription</p>
 
                         @* 6. Read More Button *@
-                        <a class="btn btn-dark" href="#">Read More</a> @* href will be updated in the next lecture *@
+                        <a class="btn btn-dark" 
+                              asp-area=""
+                              asp-action="Index"
+                              asp-controller="Blogs"     
+                              asp-route-urlHandle="@blogPost.UrlHandle"
+                        >Read More</a>
                     </div>
                 </div>
             }

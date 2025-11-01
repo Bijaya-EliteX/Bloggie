@@ -34,7 +34,5 @@ namespace Bloggie.web.Controllers
         }
     }
 
-    public interface IBlogRepository
-    {
-    }
 }
+

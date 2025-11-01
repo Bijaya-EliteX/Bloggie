@@ -78,6 +78,8 @@ namespace Bloggie.web.Repositories
 
             return null;
         }
-       
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle) => await bloggiedbContext.BlogPosts.Include(x => x.Tags)
+                 .FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+
     }
 }

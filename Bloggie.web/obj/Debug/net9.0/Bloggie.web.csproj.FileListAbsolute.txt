@@ -327,7 +327,6 @@ D:\Bloggie\Bloggie.web\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\scopedcss\bundle\Bloggie.web.styles.css
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\scopedcss\projectbundle\Bloggie.web.bundle.scp.css
-D:\Bloggie\Bloggie.web\obj\Debug\net9.0\compressed\g99bwt6eh3-c2tiyv64ts.gz
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\compressed\0dx57wt8we-61n19gt1b8.gz
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\compressed\7dcq3fkujp-xtxxf3hu2r.gz
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\compressed\5fy86ztyaq-agp80tu62r.gz
@@ -401,3 +400,4 @@ D:\Bloggie\Bloggie.web\obj\Debug\net9.0\Bloggie.web.genruntimeconfig.cache
 D:\Bloggie\Bloggie.web\obj\Debug\net9.0\ref\Bloggie.web.dll
 D:\Bloggie\Bloggie.web\bin\Debug\net9.0\CloudinaryDotNet.dll
 D:\Bloggie\Bloggie.web\bin\Debug\net9.0\Newtonsoft.Json.dll
+D:\Bloggie\Bloggie.web\obj\Debug\net9.0\compressed\g99bwt6eh3-g30nue5ye8.gz
