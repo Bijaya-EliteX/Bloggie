@@ -1,8 +1,76 @@
-﻿@{
+﻿@model IEnumerable<Bloggie.web.Models.Domain.BlogPost>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container col-xxl-8 px-4 py-5">
+    <div class="row ">
+        @* === Left-Side Content === *@
+        <div class="col-12 col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Bloggie - The Dev Blog</h1>
+            <p class="lead">
+                Bloggie is the go-to coding blogs covering a vast range of topics like HTML, CSS, Javascript, ASP.NET, C#, Angular etc.
+                Want to read the latest dev articles? Join the Bloggie app and get weekly blogs in your email.
+            </p>
+        </div>
+
+        @* === Right-Side Image === *@
+        <div class="col-12 col-lg-6">
+            @* Stock image linked via absolute URL for the hero image *@
+            <img src="https://images.pexels.com/photos/1329571/pexels-photo-1329571.jpeg"
+                 alt="Bloggie - Dev blogs"
+                 class="d-block mx-lg-auto img-fluid"
+                 width="300" />
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        @* --- Conditional check if any blogs exist in the model --- *@
+        @if (Model != null && Model.Any())
+        {
+            @* Loop through each BlogPost item *@
+            @foreach (var blogPost in Model)
+            {
+                <div class="col-12 col-lg-6">
+                    @* Individual Blog Post Card/Container (padding of 5 added later in video: p-5) *@
+                    <div class="mb-5 bg-gradient box-shadow p-5">
+                        @* 1. Featured Image *@
+                        <img src="@blogPost.FeaturedImageUrl"
+                             alt="@blogPost.Heading"
+                             class="mb-4 d-block img-fluid" />
+
+                        @* 2. Post Heading (Linked) *@
+                        <h2 class="mb-2">@blogPost.Heading</h2>
+
+                        @* 3. Author and Publish Date *@
+                        <p>
+                            Author: <b>@blogPost.Author</b>
+                            <br />
+                            Published Date: @blogPost.PublishedDate.ToShortDateString()
+                        </p>
+
+                        @* 4. Tags *@
+                        <p class="mb-4">
+                            @foreach (var tag in blogPost.Tags)
+                            {
+                                <span class="badge bg-secondary me-1">@tag.Name</span>
+                            }
+                        </p>
+
+                        @* 5. Short Description *@
+                        <p class="mb-4">@blogPost.ShortDescription</p>
+
+                        @* 6. Read More Button *@
+                        <a class="btn btn-dark" href="#">Read More</a> @* href will be updated in the next lecture *@
+                    </div>
+                </div>
+            }
+        }
+        @* --- No Blogs Found Message --- *@
+        else
+        {
+            <p>No blog posts found!</p>
+        }
+    </div>
 </div>
