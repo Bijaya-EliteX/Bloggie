@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Bloggie.web.Models.Domain.BlogPost>
+﻿@model Bloggie.web.Models.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -24,13 +24,27 @@
         </div>
     </div>
 </div>
+<div class="container mt-2 mb-2">
+    <div class="row justify-content-center">
+        <div class="d-flex col-6">
+            @if(Model!=null && Model.Tags.Any())
+            {
+                @foreach(var tags in Model.Tags)
+                {
+                    <span class="badge btn-secondary me-1">@tags.Name</span>
+                }
+            }
+         </div>
+    </div>
+     
+</div>
 <div class="container mt-5">
     <div class="row justify-content-center">
         @* --- Conditional check if any blogs exist in the model --- *@
-        @if (Model != null && Model.Any())
+        @if (Model != null && Model.BlogPosts.Any())
         {
             @* Loop through each BlogPost item *@
-            @foreach (var blogPost in Model)
+            @foreach (var blogPost in Model.BlogPosts)
             {
                 <div class="col-12 col-lg-6">
                     @* Individual Blog Post Card/Container (padding of 5 added later in video: p-5) *@
