@@ -19,6 +19,19 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
 
 
+
+// Configure Identity Password Options (19:50)
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    
+    options.Password.RequireDigit = true; 
+    options.Password.RequireLowercase = true; 
+    options.Password.RequireNonAlphanumeric = true; 
+    options.Password.RequireUppercase = true; 
+    options.Password.RequiredLength = 6; 
+    options.Password.RequiredUniqueChars = 1; 
+});
+
 //We Register the ITagTepository here
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 // NEW: Registering the IBlogPostRepository
