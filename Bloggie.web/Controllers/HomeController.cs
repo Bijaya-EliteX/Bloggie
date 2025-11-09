@@ -18,7 +18,7 @@ namespace Bloggie.web.Controllers
             this.blogRepository = blogRepository;
             this.tagRepository = tagRepository;
         }
-
+        //controller logic to display blogs in home page
         public async Task<IActionResult> Index()
         {
             var blogPosts = await blogRepository.GetAllAsync(); 
