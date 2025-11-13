@@ -1,24 +1,53 @@
 ﻿using Bloggie.web.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
+using System.Reflection.Metadata.Ecma335;       
 
 namespace Bloggie.web.Controllers
 {
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
+        }
+        // Handles GET requests for the login page
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel) { 
+            // Parameters: Username, Password, IsPersistent (remember me?), LockoutOnFailure
+            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username,
+                loginViewModel.Password, false, false);
+
+            if (signInResult != null && signInResult.Succeeded)
+            {
+                // If login is successful, redirect to the home page.
+                return RedirectToAction("Index", "Home");
+            }
+
+            // If login fails, show the form again.
+            // You can also add an error message to display to the user.
+            // Example: ModelState.AddModelError("", "Invalid username or password");
+            return View();
+        }
+
+        // Handles GET requests for the Register page
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+        
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
