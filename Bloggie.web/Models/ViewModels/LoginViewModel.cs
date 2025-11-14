@@ -6,6 +6,7 @@ namespace Bloggie.web.Models.ViewModels
         [Required]
         public string Username { get; set; }
         [Required]
+        [DataType(DataType.Password)] // Extra: Hides input characters
         public string Password { get; set; }
         
 

@@ -15,31 +15,7 @@ namespace Bloggie.web.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
-        // Handles GET requests for the login page
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
 
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel) { 
-            // Parameters: Username, Password, IsPersistent (remember me?), LockoutOnFailure
-            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username,
-                loginViewModel.Password, false, false);
-
-            if (signInResult != null && signInResult.Succeeded)
-            {
-                // If login is successful, redirect to the home page.
-                return RedirectToAction("Index", "Home");
-            }
-
-            // If login fails, show the form again.
-            // You can also add an error message to display to the user.
-            // Example: ModelState.AddModelError("", "Invalid username or password");
-            return View();
-        }
 
         // Handles GET requests for the Register page
         [HttpGet]
@@ -58,11 +34,12 @@ namespace Bloggie.web.Controllers
                 Email = registerViewModel.Email
             };
 
-              //  Create the user in the Identity store
-              var identityResult = await userManager.AddToRoleAsync(identityUser, "User");
+            
+            var identityResult = await userManager.CreateAsync(identityUser, registerViewModel.Password);
 
             if (identityResult.Succeeded)
             {
+                var roleIdentityResult = await userManager.AddToRoleAsync(identityUser, "User");
                 //lRedirect to the GET register Action to clear the form
                 return RedirectToAction("Register");
             }
@@ -71,6 +48,31 @@ namespace Bloggie.web.Controllers
                {
                    ModelState.AddModelError("", error.Description);
                }
+            return View();
+        }
+        // Handles GET requests for the login page
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            // Use SignInManager to attempt to sign the user in with the provided credentials
+            var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username,
+                loginViewModel.Password, false, false);
+
+            if (signInResult != null && signInResult.Succeeded)
+            {
+                // If login is successful, redirect the user to the homepage
+                return RedirectToAction("Index", "Home");
+            }
+
+            // If login fails, return the user to the login view so they can try again.
+            // You can add error handling here later.
             return View();
         }
 
